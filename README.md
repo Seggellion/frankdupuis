@@ -1,1 +1,1 @@
-# frankdupuis  Studio  Shopify theme
+# FrankDupuis Landscaping  Studio  Shopify theme
