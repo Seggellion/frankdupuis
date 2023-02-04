@@ -83,6 +83,58 @@
     {%- endif -%}
 
     <div class="product-grid-container" id="ProductGridContainer">
+      {%- comment -%} Added categories | Added by Dustin @shopify on Nov. 27, 2022 {%- endcomment -%}
+      <style>
+        .product-categories{
+          display:flex;
+          list-style:none;
+          flex-direction:row;
+          width: 75%;
+          margin: 30px auto;
+          justify-content: space-around;
+        }
+        .product-categories li a{
+          text-transform: uppercase;
+          text-decoration: none;
+          color: black;
+          font-weight: 900;
+         transition: transform 0.5s ease-in-out;
+          transform: scaleY(1.5);
+          display: block;
+          border-bottom:0px solid black;
+        }
+        .product-categories li a:hover{
+          transform: scaleY(1.7);
+          transition: transform 0.5s ease-in-out;
+          border-bottom:1px solid black;
+        }
+      </style>    
+      <ul class="product-categories">
+        {% for link_collection in collections %}
+          {% assign collection_title = link_collection.title | split: " " %}
+          {% assign collection_type = collection_title.first | downcase  %}
+          {% assign collection_title = collection_title[1] | downcase %}
+          {% assign category = collection.products.first.type | downcase %}
+          {% assign category = category | split: " " %}
+          {% assign category = category[0]  %}
+        
+          {% if collection_title contains category %}
+            
+          <script>
+            console.log('Collection Title: ','{{ collection_title }}');
+            console.log('Category: ','{{ category }}');
+          console.log('collection_type: ','{{ collection_type }}');
+            console.log('link_collection: ','{{ link_collection.title }}');
+          </script>
+        
+             {% unless link_collection.title == category %}
+            <li>{{ link_collection.title | link_to: link_collection.url }}</li>
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+      {%- comment -%} @MC:EOL | Dustin @shopify on Nov. 27, 2022 {%- endcomment -%}
+      
       {%- paginate collection.products by section.settings.products_per_page -%}
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">

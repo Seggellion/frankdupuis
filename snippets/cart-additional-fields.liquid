@@ -1,0 +1,82 @@
+<style>
+  .field::before,.field::after{
+    display:none;
+  }
+</style>
+<div class="additional-fields">
+  <div class="delivery-date-container">
+    <input
+    type="text"
+    name="contact[delivery_date]"
+    id="RegisterForm-delivery_date"          
+    placeholder="Preferred delivery date"
+    >
+  </div>
+  <div class="payment-method-container">
+    <select name="contact[payment_method]" id="RegisterForm-payment_method">
+    <option value="" selected>Payment method</option>
+    <option value="credit">Visa / MasterCard / Visa Debit</option>
+    <option value="debit">Debit</option>    
+    <option value="cash">Cash</option>
+    <option value="etransfer">Etransfer</option>  
+    <option value="gift_card">Gift Cards</option>  
+    
+    
+    </select>
+  </div>  
+</div>
+
+<script>
+const cc_inputs = `
+<div class="row cc_fields">       
+<div class="field">
+  <label for="cc_number">Credit Card Number</label>
+  <input type="text" id="cc_number" name="contact[cc_number]" value="">
+</div>
+<div class="field">
+  <label for="exp_date">Exp Date</label>
+  <input type="text" id="exp_date" name="contact[exp_date]" value=""  >
+</div>
+<div class="field">
+  <label for="security_number">Security Nunber</label>
+  <input type="text" id="security_number" name="contact[security_number]" value=""  >
+</div>
+</div>    
+`;
+  
+  document.getElementById('RegisterForm-payment_method').addEventListener('change', paymentMethod, true);
+  function paymentMethod(e) {
+    console.log('test', e.currentTarget.value);
+if (document.contains(document.getElementsByClassName('payment-message')[0])) {
+               document.getElementsByClassName('payment-message')[0].remove();
+} 
+    if (document.contains(document.getElementsByClassName('cc_fields')[0])) {
+               document.getElementsByClassName('cc_fields')[0].remove();
+} 
+
+    
+    e.preventDefault();
+    e.stopPropagation();
+    const para = document.createElement("p");  
+    if (e.currentTarget.value === 'credit') {    
+      const cc_container = document.createElement("cc_container");        
+     // const cc_number = document.createElement("input");        
+      document.getElementsByClassName("payment-method-container")[0].appendChild(cc_container);
+      document.querySelector('cc_container').innerHTML = cc_inputs;
+      
+      para.innerHTML = "Your method of payment will not be charged until the day of delivery, we will call to confirm your total cost and delivery date.";
+    } else if(e.currentTarget.value === 'debit') {
+      para.innerHTML = "Debit is accepted in store and cannot be taken over the phone, we will call to confirm your total cost and delivery date.";
+    } else if(e.currentTarget.value === 'cash') {
+      para.innerHTML = "Cash is accepted in store and on delivery, we will call to confirm total cost and delivery date.";
+    } else if (e.currentTarget.value === 'etransfer') {    
+      para.innerHTML = "Our email for e-transfer is dupuistrucking@gmail.com we will call to confirm your total cost to e-transfer and delivery date."  
+    } else if (e.currentTarget.value === 'gift_card') {    
+      para.innerHTML = "Gift Cards are accepted in store only, we will call to confirm your total cost and delivery date."  
+    } else {
+      return;
+    }
+    
+    document.getElementsByClassName("payment-method-container")[0].appendChild(para).classList.add('payment-message');
+  }
+</script>

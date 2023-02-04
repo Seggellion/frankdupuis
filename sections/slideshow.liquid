@@ -23,6 +23,8 @@
       display: block;
     }
   }
+
+    
   {%- endstyle -%}
 {%- endif -%}
 
@@ -80,6 +82,16 @@
         #Slide-{{ section.id }}-{{ forloop.index }} .banner__media::after {
           opacity: {{ block.settings.image_overlay_opacity | divided_by: 100.0 }};
         }
+{%- comment -%} restore aspect ratio | Added by Dustin @shopify on Oct. 23, 2022 {%- endcomment -%}
+      {%- if block.settings.custom_settings__maintain_aspect_ratio -%}
+      #Slide-{{ section.id }}-{{ forloop.index }} .banner__media img{
+        height: auto;
+        top: auto;
+        bottom: -{{ block.settings.custom_settings__image_position }}%;
+      }
+      {%- endif -%}}
+    {%- comment -%} @MC:EOL | Dustin @shopify on Oct. 23, 2022 {%- endcomment -%}
+  
       </style>
       <div class="slideshow__slide grid__item grid--1-col slider__slide"
         id="Slide-{{ section.id }}-{{ forloop.index }}"
@@ -467,7 +479,33 @@
           ],
           "default": "center",
           "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.label"
-        }
+        },
+                {
+    "type": "header",
+    "content": {
+      "en": "Custom settings"
+    }
+  },
+  {
+    "type": "checkbox",
+    "id": "custom_settings__maintain_aspect_ratio",
+    "label": {
+      "en": "Maintain aspect ratio"
+    },
+    "default": false
+  },
+        {
+    "type": "range",
+    "id": "custom_settings__image_position",
+    "label": {
+      "en": "Image position"
+    },
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "%",
+    "default": 30
+  }
       ]
     }
   ],

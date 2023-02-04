@@ -1,0 +1,140 @@
+<style>
+  #cart_customer_address .row{
+    display:flex;
+  }
+  #cart_customer_address .field{
+    flex-direction: column-reverse;
+    outline: none;
+    box-shadow:none;
+    margin:10px 0px;
+  }
+  #cart_customer_address .field::before,
+  #cart_customer_address .field::after{
+    display:none;
+  }
+  #cart_customer_address .field input:focus-visible{
+    outline: none;
+    box-shadow:none;
+  }
+  #cart_customer_address  label{
+    font-size: 1.1rem;
+    color: #969299;
+  }
+  #cart_customer_address input{
+    background-color: #eeeeee;
+    font-size:2rem;
+    border:0px;
+    padding:5px;
+  }
+  #AddressFirstNameNew{
+    width:90%;
+  }
+</style>
+
+ <div id="cart_customer_address">
+   <h2 id="AddressNewHeading">Delivery Address</h2>
+  {% if customer.addresses_count == 0 %}
+     {% render 'cart-add-address' %}
+  {% elsif customer.default_address.address1 == blank %}
+    {% render 'cart-edit-address' %}
+  {% else %}
+    <span>Select existing address:</span>
+
+    {%- comment -%} Show address | Added by Dustin @shopify on Jan. 20, 2023 {%- endcomment -%}
+    {% unless customer.default_address.address1 == blank %}
+        <div class="address-selection-container">
+        <select name="contact[address]" id="SelectAddress">
+          <option value="" selected>Select address</option>
+        {% for address in customer.addresses %}
+          <option value="{{ address.address1 }},{{ address.city }},{{ address.zip }},{{ address.phone }}">{{ address.address1 }}, {{ address.city }}, {{ address.zip }}, {{ address.phone }}</option>  
+        {% endfor %}
+        </select>
+      </div>
+    {% endunless %}
+    {%- comment -%} @MC:EOL | Dustin @shopify on Jan. 20, 2023 {%- endcomment -%}
+     
+    <div class="checkbox_address">
+      Add new address
+      <input type="checkbox" name="AddAddress" id="newAddressCheck" value="1" onclick="showNewAddress()">
+      <div id="new-address-popout" class="new-address-popout hide">
+        {% render 'cart-add-address' %}
+      </div>
+    </div>
+   <script>
+    function showNewAddress() {
+      var checkBox = document.getElementById("newAddressCheck");
+      var text = document.getElementById("new-address-popout");
+      if (checkBox.checked == true){
+        text.classList.remove('hide')
+      } else {
+        text.classList.add('hide')
+      }
+    }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    const address_field1 = document.getElementById('ContactForm-address1');
+    const phone_field = document.getElementById('ContactForm-phone');
+    const city_field = document.getElementById('ContactForm-city');
+    const postal_field = document.getElementById('ContactForm-postalcode');
+    const cart_button = document.getElementById('cart-object-form-submit');
+    const subtotal_container = document.getElementsByClassName('subtotal-price-container')[0];
+    document.getElementById('SelectAddress').addEventListener('change', selectAddress, true);
+    function selectAddress(e) {
+            
+      e.preventDefault();
+      e.stopPropagation();
+    if (e.currentTarget.value != ''){
+      cart_button.classList.remove('hide');
+      subtotal_container.classList.remove('hide');
+    }else{
+      cart_button.classList.add('hide');
+      subtotal_container.classList.add('hide');
+    }
+      // get the address, and update the input fields.
+    city_field.value = parseCSV(e.currentTarget.value)[0][1];
+    postal_field.value = parseCSV(e.currentTarget.value)[0][2];
+    phone_field.value = parseCSV(e.currentTarget.value)[0][3];
+    address_field1.value = parseCSV(e.currentTarget.value)[0][0];
+    };
+  });
+     
+function parseCSV(str) {
+    var arr = [];
+    var quote = false;  // 'true' means we're inside a quoted field
+
+    // Iterate over each character, keep track of current row and column (of the returned array)
+    for (var row = 0, col = 0, c = 0; c < str.length; c++) {
+        var cc = str[c], nc = str[c+1];        // Current character, next character
+        arr[row] = arr[row] || [];             // Create a new row if necessary
+        arr[row][col] = arr[row][col] || '';   // Create a new column (start with empty string) if necessary
+
+        // If the current character is a quotation mark, and we're inside a
+        // quoted field, and the next character is also a quotation mark,
+        // add a quotation mark to the current column and skip the next character
+        if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+
+        // If it's just one quotation mark, begin/end quoted field
+        if (cc == '"') { quote = !quote; continue; }
+
+        // If it's a comma and we're not in a quoted field, move on to the next column
+        if (cc == ',' && !quote) { ++col; continue; }
+
+        // If it's a newline (CRLF) and we're not in a quoted field, skip the next character
+        // and move on to the next row and move to column 0 of that new row
+        if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+
+        // If it's a newline (LF or CR) and we're not in a quoted field,
+        // move on to the next row and move to column 0 of that new row
+        if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+        if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+
+        // Otherwise, append the current character to the current column
+        arr[row][col] += cc;
+    }
+    return arr;
+}
+     
+     
+   </script>
+  {% endif %}
+</div>

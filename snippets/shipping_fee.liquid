@@ -1,0 +1,42 @@
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+{% assign free_gift_over_price_30 = 4000 %} 
+{% assign variant_id = '44145430298913' %}
+
+  <script>
+  (function($) {
+    var cartItems = {{ cart.items | json }},
+        qtyInTheCart = 0,
+        cartUpdates = {},
+        cartTotal = {{ cart.total_price }};
+    for (var i=0; i<cartItems.length; i++) {
+      if ( cartItems[i].id === {{ fee_variant_id }} ) {
+        qtyInTheCart = cartItems[i].quantity;
+        break;
+      }
+    }
+    if ( ( cartItems.length === 1 ) && ( qtyInTheCart > 0 ) ) {
+      cartUpdates = { {{ fee_variant_id }}: 0 }
+      console.log('test');
+    }    
+    else if ( ( cartItems.length >= 1 ) && ( qtyInTheCart !== 1 ) && (cartTotal >= {{ free_gift_over_price_30 }} ) ) {
+      cartUpdates = { {{ fee_variant_id }}: 1 }
+    }
+    else {
+      return;
+    }
+    var params = {
+      type: 'POST',
+      url: '/cart/update.js',
+      data: { updates: cartUpdates },
+      dataType: 'json',
+      success: function(stuff) { 
+        window.location.href = '/cart';
+      }
+    };
+    $.ajax(params);
+  })(jQuery);
+
+
+    
+  </script>

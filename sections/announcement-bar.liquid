@@ -18,6 +18,35 @@
             </a>
           {%- endif -%}
         {%- endif -%}
+
+
+        {%- comment -%} Add contact to announcement | Added by Dustin @shopify on Dec. 11, 2022 {%- endcomment -%}
+
+    {% assign saturday_start_time =  settings.saturday_hours | slice: 0, 2 %}
+    {% assign saturday_start_time  =  saturday_start_time  | times: 1 %}
+    {% assign saturday_end_time =  settings.saturday_hours | slice: 5, 8 %}
+    {% assign saturday_end_time  =  saturday_end_time  | times: 1 %}
+    {% assign monday_start_time =  settings.monday_hours | slice: 0, 2 %}
+    {% assign monday_start_time  =  monday_start_time  | times: 1 %}
+    {% assign monday_end_time =  settings.monday_hours | slice: 5, 8 %}
+    {% assign monday_end_time  =  monday_end_time  | times: 1 %}
+
+      <div class="mobile-custom-data">
+        <a class="telephone-link" href="tel:{{ settings.phone_number }}">
+          {{ settings.phone_number }}
+        </a>
+        <div class="hours">
+          <table>
+            <tr><td>
+            {% if settings.monday %}Mon-Fri {{ monday_start_time }}-{{ monday_end_time }}{% endif %}
+            {% if settings.saturday %} || Sat {{ saturday_start_time }}-{{ saturday_end_time }}{% endif %}
+            </td></tr>                       
+          </table>                      
+        </div>
+      </div>                    
+        {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 11, 2022 {%- endcomment -%}
+
+        
       </div>
   {%- endcase -%}
 {%- endfor -%}

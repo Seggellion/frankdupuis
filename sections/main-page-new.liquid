@@ -1,0 +1,274 @@
+<link rel="stylesheet" href="{{ 'section-main-page.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-rte.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'section-main-page.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #map {
+    height: 400px;
+    width: 100%;
+  }
+  .google-map{
+    position:relative;
+  }
+  .info-card{
+    z-index:9001;
+  }
+{%- endstyle -%}
+
+
+{%- comment -%} Added google map | Added by Dustin @shopify on Oct. 24, 2022 {%- endcomment -%}
+{%- assign api_key = "AIzaSyAseXX5L63nwouFB8mU_TvAn8JehxcLLmg" -%}
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap">
+</script>
+
+<div class="google-map">
+
+
+{%- assign reviews_url = "https://mybusiness.googleapis.com/v4/accounts/{accountId}/locations/{locationId}/reviews" -%}
+{%- assign locationid = 'ChIJT95vxIrVOogR2vmrYw3yCGA' -%}
+{%- assign places_api_key = 'AIzaSyBQWhrMbkmRw-z9egPS0yZeu_i5PNuW8pE' -%}
+{%- assign places_url = 'http://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJN1t_tDewuEmsRUsoyG83frY4&fields=name%2Crating%2Cformatted_phone_number&key=' | append: places_api_key  -%}
+<script>
+/*
+  var cartContents = fetch('{{ places_url }}')
+  .then(response => response.json())
+  .then(data => { return data });
+console.log('contents:',cartContents );
+*/
+
+
+var script = document.createElement('script');
+script.src = '{{ places_url }}'
+console.log('script:', script)
+document.getElementsByTagName('head')[0].appendChild(script);
+  
+  // Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  const tecumseh = { lat: 42.2737597, lng: -82.9037178 };
+  // The map, centered at Uluru
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 10,
+    center: tecumseh,
+  });
+  // The marker, positioned at Uluru
+  const marker = new google.maps.Marker({
+    position: tecumseh,
+    map: map,
+  });
+}
+
+window.initMap = initMap;
+
+</script>
+
+  <div id="map"></div>
+
+
+{%- comment -%} @MC:EOL | Dustin @shopify on Oct. 24, 2022 {%- endcomment -%}
+
+<style>
+  #contact-container{
+    display:flex;
+  }
+  
+  #contact-container .business-hours ul,
+  #contact-container .business-hours li{
+    list-style:none;
+    padding:0px;
+    width:100%;
+  }
+  #contact-container .contact-information{
+    width:30%;
+  }
+  #contact-container .contact-form{
+    width:70%;
+    padding-left: 30px;
+  }
+  #contact-container .business-hours li{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    flex-direction:row;
+    width:100%;
+  }
+  .contact-information h2{
+    margin:0px;
+  }
+  #contact-container .call-to-action{
+    margin-top: 40px;
+  }
+   #contact-container .call-to-action .address,
+   #contact-container .call-to-action .telephone{
+    display: flex;
+    flex-direction: row;
+  }
+  #contact-container .call-to-action .address-icon,
+  #contact-container .call-to-action .telephone-icon{
+    width:50%;
+    padding: 15px 20px;
+    text-align:center;
+  }
+  #contact-container .address-text,
+  #contact-container .telephone-text{
+    width:100%;
+  }
+  #contact-container .address-text p,
+  #contact-container .telephone-text p{
+    margin:0px;
+    font-size: 12px;
+  }
+  #contact-container .field{
+    margin: 20px 0px;
+  }
+</style>
+  {% assign monday_commaizer = "," | append: settings.monday_hours %}
+  {% assign tuesday_commaizer = "," | append: settings.tuesday_hours %}
+  {% assign wednesday_commaizer = "," | append: settings.wednesday_hours %}
+  {% assign thursday_commaizer = "," | append: settings.thursday_hours %}
+  {% assign friday_commaizer = "," | append: settings.friday_hours %}
+  {% assign saturday_commaizer = "," | append: settings.saturday_hours %}
+  {% assign week_hours_string = settings.monday_hours | append:  tuesday_commaizer %}
+  {% assign week_hours_string =  week_hours_string | append:  wednesday_commaizer %}
+  {% assign week_hours_string =  week_hours_string | append:  thursday_commaizer %}
+  {% assign week_hours_string =  week_hours_string | append:  friday_commaizer %}
+  {% assign week_hours_string =  week_hours_string | append:  saturday_commaizer %}
+  {% assign hours_array = week_hours_string | split: "," %}
+  {% assign unique_hour = hours_array | uniq %}
+  {% assign unique_hour_count = unique_hour | size %}
+
+{%- comment -%} date processsor | Added by Dustin @shopify on Dec. 11, 2022 {%- endcomment -%}
+
+  {% if unique_hour_count < 3 %}
+    {% assign weekday_hours = unique_hour[0]  %}
+  {% endif %}
+{%- comment -%} @MC:EOL | Dustin @shopify on Dec. 11, 2022 {%- endcomment -%}
+<div class="page-width page-width--narrow section-{{ section.id }}-padding">
+
+<div id="contact-container" >
+<div class="col contact-information">
+  <h2>Contact Us</h2>
+  <h3>Business Hours</h3>
+  <div class="business-hours">
+    <ul>      
+      {% unless weekday_hours %}
+        {% if settings.monday %}<li><span>Monday</span><span>{{ settings.monday_hours }}</span></li>{% endif %}
+        {% if settings.tuesday %}<li><span>Tuesday</span><span>{{ settings.tuesday_hours }}</span></li>{% endif %}
+        {% if settings.wednesday %}<li><span>Wednesday</span><span>{{ settings.wednesday_hours }}</span></li>{% endif %}
+        {% if settings.thursday %}<li><span>Thursday</span><span>{{ settings.thursday_hours }}</span></li>{% endif %}
+        {% if settings.friday %}<li><span>Friday</span><span>{{ settings.friday_hours }}</span></li>{% endif %}
+      {% else %}
+        <li><span>Monday-Friday</span><span>{{ weekday_hours }}</span></li>
+      {% endunless %}
+      {% if settings.saturday %}<li><span>Saturday</span><span>{{ settings.saturday_hours }}</span></li>{% endif %}        
+      <li><span>Sunday</span><span>Closed</span></li>
+    </ul>
+  </div>
+  {% if settings.holiday_date %}
+    <h3>Holiday Hours</h3>
+  <div class="business-hours">
+    <ul>
+      <li><span>{{ settings.holiday_date }}</span><span>{{ settings.holiday_hours }}</span></li>
+    </ul>
+  </div>
+{% endif %}
+  <div class="call-to-action">
+    <div class="address">
+      <div class="address-icon">
+        <?xml version="1.0" encoding="iso-8859-1"?>
+        <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        	 viewBox="0 0 297 297" style="enable-background:new 0 0 297 297;" xml:space="preserve">
+        <g>
+        	<path d="M148.5,0C87.43,0,37.747,49.703,37.747,110.797c0,91.026,99.729,179.905,103.976,183.645
+        		c1.936,1.705,4.356,2.559,6.777,2.559c2.421,0,4.841-0.853,6.778-2.559c4.245-3.739,103.975-92.618,103.975-183.645
+        		C259.253,49.703,209.57,0,148.5,0z M148.5,272.689c-22.049-21.366-90.243-93.029-90.243-161.892
+        		c0-49.784,40.483-90.287,90.243-90.287s90.243,40.503,90.243,90.287C238.743,179.659,170.549,251.322,148.5,272.689z"/>
+        	<path d="M148.5,59.183c-28.273,0-51.274,23.154-51.274,51.614c0,28.461,23.001,51.614,51.274,51.614
+        		c28.273,0,51.274-23.153,51.274-51.614C199.774,82.337,176.773,59.183,148.5,59.183z M148.5,141.901
+        		c-16.964,0-30.765-13.953-30.765-31.104c0-17.15,13.801-31.104,30.765-31.104c16.964,0,30.765,13.953,30.765,31.104
+        		C179.265,127.948,165.464,141.901,148.5,141.901z"/>
+        </g>
+        </svg>        
+      </div>
+      <div class="address-text">
+        <a style="color:black; text-decoration:none;" target="_blank" href="https://goo.gl/maps/BLJqDCWg3FaTBiQ26">
+        <h3>Frank Dupuis Landscaping</h3>
+        <p>8421 County Road 42</p>
+        <p>Tecumseh Ontario</p>
+        <p>N0R1K0</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="telephone">
+      <div class="telephone-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M14.89 23.654c-7.367 3.367-18.802-18.86-11.601-22.615l2.107-1.039 3.492 6.817-2.082 1.026c-2.189 1.174 2.37 10.08 4.609 8.994.091-.041 2.057-1.007 2.064-1.011l3.521 6.795c-.008.004-1.989.978-2.11 1.033zm-1.538-13.409l2.917.87c.223-.747.16-1.579-.24-2.317-.399-.739-1.062-1.247-1.808-1.469l-.869 2.916zm1.804-6.058c1.551.462 2.926 1.516 3.756 3.051.831 1.536.96 3.263.498 4.813l-1.795-.535c.325-1.091.233-2.306-.352-3.387-.583-1.081-1.551-1.822-2.643-2.146l.536-1.796zm.95-3.187c2.365.705 4.463 2.312 5.729 4.656 1.269 2.343 1.466 4.978.761 7.344l-1.84-.548c.564-1.895.406-4.006-.608-5.882-1.016-1.877-2.696-3.165-4.591-3.729l.549-1.841z"/></svg>
+      </div>
+      <div class="telephone-text">
+        <h3><a style="color:black; text-decoration:none;" href="tel:519-735-4366">519-735-4366</a></h3>
+      </div>
+    </div>
+              
+  </div>
+</div>
+  <div class="col contact-form">
+{% include 'new-contact-form' %}
+  </div>
+</div>
+  
+  <div class="rte">
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

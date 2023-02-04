@@ -1,0 +1,399 @@
+#shopify-section-header .header__heading-link .h2 {
+  color:black;
+}
+#shopify-section-header .header__menu-item span,
+#shopify-section-header .header__menu-item{
+  color:red;
+}
+#shopify-section-header a.list-menu__item:hover{
+  color: #343434;
+}
+#shopify-section-header a.list-menu__item{
+  color:black;
+}
+#shopify-section-header .telephone-link{
+  color:red
+}
+
+#shopify-section-header .custom-data{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  flex-direction:column;
+  /*position: absolute;*/
+  right: 130px;
+  top: 30px;
+}
+
+.subtotal-price-container.hide,
+.cart__checkout-button.hide{
+  display:none;
+}
+
+.cart__ctas small{
+  color:red;
+  margin-right:20px;
+    font-size: 1.2rem;
+}
+.cart__footer-wrapper #main-cart-footer{
+  padding:0px;
+}
+.cart__ctas{
+  flex-direction: column;
+    width: 99%;
+    justify-content: center;
+    margin: 0px;
+    text-align: ;
+    margin-left: auto;
+}
+@media screen and (max-width: 990px){
+  #shopify-section-header .custom-data{
+    display:none;
+    top:-1000px;
+  }
+  .line-remove-button{
+    position: absolute;
+    right: 0px;
+    bottom: 40px;
+  }
+}
+#shopify-section-announcement-bar .mobile-custom-data a.telephone-link,
+#shopify-section-announcement-bar .mobile-custom-data a.telephone-link:visited{
+  text-decoration:none;
+  border-bottom:1px solid red;
+  color:red;
+}
+@media screen and (max-width: 989px){
+  #shopify-section-announcement-bar .mobile-custom-data{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      flex-direction:row;
+      position: absolute;
+    margin:10px;
+    top: -6px;
+    width: calc(100% - 20px);
+  }
+}
+@media screen and (min-width: 990px){
+  #shopify-section-announcement-bar .mobile-custom-data{
+    display:none;
+  }
+}
+
+#shopify-section-announcement-bar .mobile-custom-data table,
+#shopify-section-announcement-bar .mobile-custom-data tr,
+#shopify-section-announcement-bar .mobile-custom-data td,
+#shopify-section-header .custom-data table,
+#shopify-section-header .custom-data tr,
+#shopify-section-header .custom-data td{
+  border:0px;
+  padding: 0px;
+  box-shadow:none;
+}
+
+#MainContent .content-page .rte{
+    background: #e0e0e0;
+    padding: 2px 14px;
+    border: 4px solid black;
+  }
+
+
+.social-container{
+ margin-left:20px;
+  margin-top:20px;
+}
+.social-container ul{
+  flex-direction:column;
+  overflow:hidden;
+}
+.social-container .h1{
+  margin:0px;
+  text-align:center;
+}
+.social-container p{
+  font-size:2rem;
+  margin:0px;
+  text-align:center;
+}
+.social-container .icon path{
+ color:black !important;
+ fill:black !important;
+}
+.social-container .list-social__link{
+ color:black !important;
+  padding:1rem;
+}
+.social-container svg{             
+ display:inline-block;
+ margin-right:10px;
+}
+.social-container a{
+text-decoration:none;
+ display:flex;
+ align-items:center;
+  font-size:2.3rem;
+}
+.social-container .list-social__item .icon{
+  width:2.5rem;
+  height:2.5rem;
+}
+
+/* Range slider | Added by Dustin H (Shopify Theme Support) on Dec. 23, 2022 */
+  .rangeslider{
+      width: 100%;
+  }
+    
+  .myslider {
+      -webkit-appearance: none;
+      background: red  ;
+      width: 100%;
+      height: 40px;
+      border-radius:20px;
+      border:2px solid black;
+      opacity: 2;
+     }
+        
+  .myslider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      cursor: pointer;
+      background: #34495E  ;
+      width: 5%;
+      height: 40px;
+  }
+    
+  .myslider:hover {
+      opacity: 1;
+  }
+
+#yards-quantity.hide{
+  display:none;
+}
+.rangeslider.hide{
+  display:none;
+}
+
+.form__label.hide{
+  display:none;
+}
+.new-address-popout.hide{
+  display:none;
+}
+body.poppedup{
+  overflow: hidden;
+}
+#cart_popup{
+  display:block;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  top:0px;
+  left:0px;
+  z-index:9001;
+  padding: 0px 40px;
+}
+body.poppedup #cart_popup{
+  display:block;
+}
+
+#cart_popup .field{
+  margin: 10px 0px;
+}
+#cart_popup .login-button{
+  font-size:3rem;
+  margin:0px auto;
+  text-decoration:none;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width: 200px;
+}
+#cart_popup .center{
+  display:block;
+  margin:0px auto;
+  transform: translateY(20px);
+}
+
+#cart_popup #create_customer{
+  display:flex;
+  flex-direction:column;
+}
+
+#cart_popup #create_customer .field{
+  margin: 5px 0px;
+}
+  
+#cart_popup hr{
+  margin: 4rem 0;
+}
+.delivery-date-container,
+.payment-method-container{
+  display:flex;
+  justify-content:right;
+  margin:0px 30px;
+  padding-bottom: 10px;
+  flex-direction:column;
+  width:292px;
+}
+.address-selection-container{
+  padding-bottom:10px;
+}
+
+.payment-message{
+  color:red;
+}
+.cc_fields{
+  display:flex;
+  flex-direction:column;
+  margin: 10px 0px;
+}
+
+.cc_fields .field{
+  
+  display:flex;
+  flex-direction:column;
+}
+.cc_fields .field input{
+font-size:2.2rem;
+}
+#SelectAddress,
+#RegisterForm-delivery_date,
+#RegisterForm-payment_method{
+  font-size:2.2rem;
+  color:black;
+  text-align:center;
+  cursor:pointer;
+}
+#RegisterForm-delivery_date::placeholder {
+    color: black;
+}
+
+.datepicker-header .button{
+  min-width:20px;
+  padding: 0px;
+  width: 20px;
+  margin: 0px;
+}
+
+.cart__ctas{
+  justify-content: right;
+}
+.cart__footer{
+padding-top: 30px;
+}
+
+#cart-notification{
+  z-index: 9001;
+  top: -20px;
+}
+
+.thankyou{
+  width: 600px;
+  border: 5px solid black;
+  text-align:center;
+  padding: 40px;
+}
+
+.thankyou h1{
+  color:red;
+  text-transform:uppercase;
+  font-size: 5rem;
+  margin: 0px;
+  transform: scaleY(1.3);
+  line-height: 5rem;
+}
+
+.thankyou h2{
+  text-transform: uppercase;
+  font-size: 3.3rem;
+  color: black;
+  font-weight:100;
+}
+.thankyou ul{
+  list-style:none;
+  padding:0px;
+  margin:20px 0px;
+}
+.thankyou li{
+  display:flex;
+  align-items: center;
+  align-items: center;
+  line-height: 2.1rem;
+  margin: 50px 0px;
+  font-size:2.2rem;
+  color:black;
+}
+.thankyou li span{
+  display:inline-block;
+  width:160px;
+}
+
+.thankyou .icon-mail{
+  width:100%;
+    background-color:black;
+  fill:white;
+}
+.thankyou .list-icon{
+  display:block;
+  font-size:10rem;
+  font-weight:900;
+  width: 270px;
+}
+.thankyou .exclaim-icon:after{
+  content:'!';
+}
+.thankyou .dollar-icon:after{
+  content:'$';
+}
+.thankyou .list-social{
+      justify-content: center;
+}
+.thankyou .list-social__item{
+  margin: 20px 0px;
+}
+
+.thankyou .list-social__item .icon{
+  width:3rem;
+  height:3rem;
+}
+
+#CartContactForm .additional-fields{
+  flex-direction: column;
+  align-items: flex-end;
+  display:flex;
+  padding-right:5rem;
+  margin:20px 0px;
+}
+#CartContactForm .additional-fields input{
+width:100%;
+}
+#cart_customer_address{
+    width: 100%;
+    display: flex;
+    padding: 0 8rem;
+    flex-direction: column;
+    align-items: flex-end;
+}
+#cart_customer_address label{
+  text-align:left;
+}
+.new-address-popout{
+  display:block;
+}
+.checkbox_address{  
+  text-align:right;
+}
+.return-to-homepage a,
+.return-to-homepage a:visited{
+  color:white;
+  text-decoration:none;
+}
+.return-to-homepage a{
+  display:block;
+  padding:5px;
+  background-color:black;
+  width:70%;
+  margin:0px auto;
+}
+/* @MC:EOL |  Dustin H (Shopify Theme Support) on Dec. 23, 2022 */

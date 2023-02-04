@@ -1,0 +1,61 @@
+
+{% assign preset_value = 10 %}
+{% for item in cart.items %}  
+  {% if item.product.tags contains "bulk" %}    
+    {% if item.product.id == product.id %}
+      {% assign exists_in_cart = true %}
+      {% assign preset_value = item.quantity | times: 0.25 %}
+      {% else %}
+    {% endif %}  
+  {% endif %}
+{% endfor %}
+   
+<div class="rangeslider hide">
+  <p>Yards: <span id="demo"></span></p>
+  <input type="range" min="0.25" max="25" value="{{ preset_value }}" step="0.25" {% if exists_in_cart == true %} data-persistence=1 data-persistentquantity={{ preset_value | times: 4 }} {% endif %}
+                  class="myslider" id="sliderRange">
+
+</div>
+  
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  var rangeslider = document.getElementById("sliderRange");
+  var quantity = document.querySelector(".quantity__input");
+    if (quantity == null){
+      quantity = document.querySelector("#yards-quantity");
+    }
+  var output = document.getElementById("demo");
+  var corrected = document.getElementById("corrected");
+  const persistent_quantity = parseInt(rangeslider.dataset.persistentquantity);
+
+ output.innerHTML = rangeslider.value;
+
+  if (rangeslider.dataset.persistence){
+
+ // quantity.value = 0;
+  }else{
+ //  console.log('no persistence');
+  //  quantity.value = (10 * 4);
+  }
+   
+  rangeslider.oninput = function() {
+    
+     if (rangeslider.dataset.persistence){  
+       
+     //   corrected.innerHTML =  this.value - (persistent_quantity*0.25);
+  //      output.innerHTML =  this.value;
+    //    quantity.value = (this.value - (persistent_quantity*0.25)) * 4;
+  //    quantity.value = this.value;
+     }else{
+       
+      output.innerHTML =  this.value;
+      quantity.value = (this.value );
+     }
+  }
+
+  
+var button = document.querySelector('.product-form__submit');
+   button.addEventListener("click", function(e) {  
+  });
+});
+</script>

@@ -12,6 +12,10 @@
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
+{%- comment -%} Refactor this so that it only loads on the cart page | Added by Dustin @shopify on Dec. 31, 2022 {%- endcomment -%}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker.min.css">
+    {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 31, 2022 {%- endcomment -%}
+    
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
@@ -217,7 +221,8 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
-
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}
@@ -290,5 +295,25 @@
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {%- comment -%} Redirect for account creation | Added by Dustin @shopify on Jan. 20, 2023 {%- endcomment -%}
+      <script> 
+         (function() { 
+           var REDIRECT_PATH = '/cart'; 
+         
+           var selector = '#create_customer, form[action$="/account"][method="post"]', 
+               $form = document.querySelectorAll(selector)[0]; 
+         
+           if ($form) { 
+             $redirect = document.createElement('input'); 
+             $redirect.setAttribute('name', 'return_to'); 
+             $redirect.setAttribute('type', 'hidden'); 
+             $redirect.value = REDIRECT_PATH; 
+             $form.appendChild($redirect); 
+           } 
+         })(); 
+       </script> 
+    {%- comment -%} @MC:EOL | Dustin @shopify on Jan. 20, 2023 {%- endcomment -%}
+    
   </body>
 </html>

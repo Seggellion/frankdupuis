@@ -1,1 +1,5 @@
+ {%- if section.settings.yardage_quantity_selector -%}
+{{ 'general.cart.view' | t: count: cart.items.size }}
+ {%- else -%}
 {{ 'general.cart.view' | t: count: cart.item_count }}
+{%- endif -%}

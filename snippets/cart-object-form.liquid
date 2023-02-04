@@ -1,0 +1,165 @@
+{%- comment -%} Added for datepicker | Added by Dustin @shopify on Dec. 31, 2022 {%- endcomment -%}
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+  const elem = document.querySelector('#RegisterForm-delivery_date');
+const datepicker = new Datepicker(elem, {
+
+}); 
+  });
+</script>
+
+{%- comment -%} @MC:EOL | Dustin @shopify on Dec. 31, 2022 {%- endcomment -%}
+{%- comment -%} Added customer address form | Added by Dustin @shopify on Jan. 10, 2023 {%- endcomment -%}
+{%- if customer -%}
+  {% render 'cart-customer-address' %}
+{% endif %}
+{%- comment -%} @MC:EOL | Dustin @shopify on Jan. 10, 2023 {%- endcomment -%}
+{%- form 'contact', id: 'CartContactForm', class: 'isolate' -%}
+  
+      <input type="hidden" id="ContactForm-body" 
+    name="contact[body]" 
+    value="New order submitted">
+  
+      {{ form.errors | default_errors }}
+      {%- if form.posted_successfully? -%}
+        <script> 
+          window.location = "/pages/thank-you"; 
+        </script>
+        <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</h2>
+      {%- elsif form.errors -%}
+        <script>
+        console.log('form error:', "{{ form.errors.messages['email'] }}")
+        </script>
+        <div class="form__message">
+          <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h2>
+        </div>
+        <ul class="form-status-list caption-large" role="list">
+          <li>
+            <a href="#ContactForm-email" class="link">
+              {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+            </a>
+          </li>
+        </ul>
+      {%- endif -%}
+
+{% unless customer.default_address.address1 == blank %}
+  {% render 'cart-additional-fields' %}
+{% endunless %}
+  
+{% assign index = 0 %}
+  
+
+    
+    <input type="hidden" id="ContactForm-email" 
+    name="contact[email]" 
+    value="{{ customer.email }}">
+
+
+    <input type="hidden" id="ContactForm-first_name" 
+    name="contact[first_name]" 
+    value="{{  customer.first_name }}">
+
+    <input type="hidden" id="ContactForm-last_name" 
+    name="contact[last_name]" 
+    value="{{  customer.last_name }}">
+  {% if customer.phone %}
+    {% assign phone = customer.phone %}
+  {% elsif customer.addresses[0].phone %}
+    {% assign phone = customer.addresses[0].phone %}
+  {% endif %}
+    <input type="hidden" id="ContactForm-phone"
+    name="contact[phone]" 
+    value="{{phone}}">
+
+  <input type="hidden" id="ContactForm-address1"
+    name="contact[address1]" 
+    value="{{customer.default_address.address1}}">
+  
+    <input type="hidden" id="ContactForm-city"
+    name="contact[city]" 
+    value="{{customer.default_address.city}}">
+
+  <input type="hidden" id="ContactForm-postalcode"
+    name="contact[postalcode]" 
+    value="{{customer.default_address.zip}}">
+  
+  {%- for item in cart.items -%}
+
+  <input type="hidden" id="ContactForm-line_item_product" 
+    name="contact[line_item_product-{{ index }}]" 
+    value="{{  item.product.title }}">
+
+  <input type="hidden" id="ContactForm-line_item_variant" 
+    name="contact[line_item_variant-{{ index }}]" 
+    value="{{  item.variant.title }}">
+
+  <input type="hidden" id="ContactForm-line_item_price" 
+    name="contact[line_item_price-{{ index }}]" 
+    value="{{  item.variant.price | money }}">
+    
+   {%- if item.option1 -%}
+    <input type="hidden" id="ContactForm-line_item_option1" 
+      name="contact[line_item_option1-{{ index }}]" 
+      value="{{  item.product.option1 }}">
+  {%- endif -%}
+
+  {%- if item.option2 -%}
+    <input type="hidden" id="ContactForm-line_item_option2" 
+      name="contact[line_item_option2-{{ index }}]" 
+      value="{{  item.product.option2 }}">
+  {%- endif -%}
+    
+{%- unless item.product.tags contains 'bulk' -%}
+  <input type="hidden" id="ContactForm-line_item_quantity" 
+    name="contact[line_item_quantity-{{ index }}]" 
+    value="{{  item.quantity }}">
+  {%- endunless -%}
+
+   {%- if item.product.tags contains 'bulk' -%}
+    <input type="hidden" id="ContactForm-line_item_yards" 
+    name="contact[line_item_yards-{{ index }}]" 
+    value="{{  item.properties.yards }}">
+   {%- endif -%}
+
+  {% assign index = index | plus: 1 %}
+{%- endfor -%}
+  
+{%- endform -%}
+
+
+{% unless customer.default_address.address1 == blank %}
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script>
+    function clearcart(){
+      $.ajax({
+        type: "POST",
+        url: '/cart/clear.js',
+        data: '',
+        dataType: 'json',
+        success: function() {
+          Shopify.clear();
+        },
+        error: function(XMLHttpRequest, textStatus) {
+          /* error code */
+        }
+      });
+  }  
+document.addEventListener("DOMContentLoaded", function(){
+  let cart_contact_button = document.getElementById('cart-object-form-submit');
+  let cart_contact_form = document.getElementById('CartContactForm');
+  cart_contact_button.addEventListener("click", function() {   
+  //  document.querySelector('body').classList.add('poppedup');
+  //  document.body.scrollTop = document.documentElement.scrollTop = 0;
+    clearcart();
+   cart_contact_form.submit();
+  });
+});
+</script>
+{%- endunless -%}
+{%- unless customer -%}
+  <script>
+    document.querySelector('body').classList.add('poppedup');
+  </script>
+{%- endunless -%}

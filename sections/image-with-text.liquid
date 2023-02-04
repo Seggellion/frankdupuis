@@ -12,6 +12,12 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+{%- if section.settings.custom_settings__maintain_aspect_ratio -%}
+        #shopify-section-{{section.id}} .image-with-text__media img{
+        width: 100%;
+        height: auto;
+      }
+  {%- endif -%}}
 {%- endstyle -%}
 
 <div class="image-with-text image-with-text--{{ section.settings.content_layout }} page-width isolate{% if settings.text_boxes_border_thickness > 0 and settings.text_boxes_border_opacity > 0 and settings.media_border_thickness > 0 and settings.media_border_opacity > 0 %} collapse-borders{% endif %}{% unless section.settings.color_scheme == 'background-1' and settings.media_border_thickness > 0 and settings.text_boxes_shadow_opacity == 0 and settings.text_boxes_border_thickness == 0 or settings.text_boxes_border_opacity == 0 %} collapse-corners{% endunless %} section-{{ section.id }}-padding">
@@ -20,16 +26,117 @@
       <div class="image-with-text__media image-with-text__media--{{ section.settings.height }} gradient color-{{ section.settings.color_scheme }} global-media-settings {% if section.settings.image != blank %}media{% else %}image-with-text__media--placeholder placeholder{% endif %}"
         {% if section.settings.height == 'adapt' and section.settings.image != blank %} style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"{% endif %}
       >
+        {%- comment -%} Added social container | Added by Dustin @shopify on Nov. 28, 2022 {%- endcomment -%}
+
+         {%- if section.settings.custom_settings__social_mode -%}
+      <div class="social-container">
+        <h2 class="h1">
+        Follow our socials!
+        </h2>
+        <p>
+          Click the link below to stay updated!
+        </p>
+
+ <ul class="list-unstyled list-social" role="list">
+            {%- if settings.social_twitter_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_twitter_link }}" class="link list-social__link" >
+                  {%- render 'icon-twitter' -%}
+                  <span class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_facebook_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_facebook_link }}" class="link list-social__link" >
+                  {%- render 'icon-facebook' -%}
+                  <span class="username">@frankdupuislandscapesupply</span>
+                  <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_pinterest_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_pinterest_link }}" class="link list-social__link" >
+                  {%- render 'icon-pinterest' -%}
+                  <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_instagram_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_instagram_link }}" class="link list-social__link" >
+                  {%- render 'icon-instagram' -%}
+                  <span class="username">@frankdupuislandscaping</span>
+                  <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_tiktok_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_tiktok_link }}" class="link list-social__link" >
+                  {%- render 'icon-tiktok' -%}
+                  <span class="username">@frankdupuislandscaping</span>
+                  <span class="visually-hidden">{{ 'general.social.links.tiktok' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_tumblr_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_tumblr_link }}" class="link list-social__link" >
+                  {%- render 'icon-tumblr' -%}
+                  <span class="visually-hidden">{{ 'general.social.links.tumblr' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_snapchat_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_snapchat_link }}" class="link list-social__link" >
+                  {%- render 'icon-snapchat' -%}
+                  <span class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_youtube_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_youtube_link }}" class="link list-social__link" >
+                  {%- render 'icon-youtube' -%}
+                  <span class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_vimeo_link != blank -%}
+              <li class="list-social__item">
+                <a href="{{ settings.social_vimeo_link }}" class="link list-social__link" >
+                  {%- render 'icon-vimeo' -%}
+                  <span class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+    
+
+</div>
+           {%- else -%}
         {%- if section.settings.image != blank -%}
+          {%- comment -%} Custom aspect ratio | Added by Dustin @shopify on Oct. 23, 2022 {%- endcomment -%}
+           {%- if section.settings.custom_settings__maintain_aspect_ratio -%}
+             {{ section.settings.image |  image_url: width: 1000 | image_tag: class: 'custom-class', loading: 'lazy' }}
+           {%- else -%}
           {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}
           {{ section.settings.image | image_url: width: 1500 | image_tag:
             loading: 'lazy',
             sizes: sizes,
             widths: '165, 360, 535, 750, 1070, 1500'
-          }}
+          }}      
+        {%- endif -%}
+        
+        {%- comment -%} @MC:EOL | Dustin @shopify on Oct. 23, 2022 {%- endcomment -%}        
         {%- else -%}
           {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}
+           {%- endif -%}
+           {%- comment -%} @MC:EOL | Dustin @shopify on Nov. 28, 2022 {%- endcomment -%}
       </div>
     </div>
     <div class="image-with-text__text-item grid__item">
@@ -256,7 +363,29 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+        {
+    "type": "header",
+    "content": {
+      "en": "Custom settings"
     }
+  },
+  {
+    "type": "checkbox",
+    "id": "custom_settings__maintain_aspect_ratio",
+    "label": {
+      "en": "Maintain aspect ratio"
+    },
+    "default": false
+  },
+  {
+    "type": "checkbox",
+    "id": "custom_settings__social_mode",
+    "label": {
+      "en": "Enable social mode"
+    },
+    "default": false
+  }
   ],
   "blocks": [
     {

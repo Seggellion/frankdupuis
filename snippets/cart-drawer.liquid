@@ -309,9 +309,12 @@
               {{ 'sections.cart.update' | t }}
             </button>
           </noscript>
-
+{%- comment -%} replace with contact form | Added by Dustin @shopify on Dec. 18, 2022 {%- endcomment -%}
+                 {%- unless settings.cart_object_form -%}
           <button type="submit" id="CartDrawer-Checkout" class="cart__checkout-button button" name="checkout" form="CartDrawer-Form"{% if cart == empty %} disabled{% endif %}>
             {{ 'sections.cart.checkout' | t }}
+                   {% endunless %}
+                   {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 20, 2022 {%- endcomment -%}
           </button>
         </div>
       </div>

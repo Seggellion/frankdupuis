@@ -20,24 +20,26 @@
         <dl>
           {%- unless item.product.has_only_default_variant -%}
             {%- for option in item.options_with_values -%}
+              {%- comment -%} Removed old display | Added by Dustin @shopify on Jan. 29, 2023
               <div class="product-option">
                 <dt>{{ option.name }}:</dt>
                 <dd>{{ option.value }}</dd>
               </div>
+               {%- endcomment -%}
             {%- endfor -%}
           {%- endunless -%}
           {%- for property in item.properties -%}
             {%- assign property_first_char = property.first | slice: 0 -%}
             {%- if property.last != blank and property_first_char != '_' -%}
               <div class="product-option">
-                <dt>{{ property.first }}:</dt>
+                <dt>{{ property.first | capitalize  }}:</dt>
                 <dd>
                   {%- if property.last contains '/uploads/' -%}
                     <a href="{{ property.last }}" class="link" target="_blank">
                       {{ property.last | split: '/' | last }}
                     </a>
                   {%- else -%}
-                    {{ property.last }}
+                    {{ property.last  }}
                   {%- endif -%}
                 </dd>
               </div>

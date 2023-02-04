@@ -55,6 +55,8 @@
                 <th class="medium-hide large-up-hide right caption-with-letter-spacing" colspan="1" scope="col">{{ 'sections.cart.headings.total' | t }}</th>
                 <th class="cart-items__heading--wide small-hide caption-with-letter-spacing" colspan="1" scope="col">{{ 'sections.cart.headings.quantity' | t }}</th>
                 <th class="small-hide right caption-with-letter-spacing" colspan="1" scope="col">{{ 'sections.cart.headings.total' | t }}</th>
+                {%- comment -%} New column for action | Added by Dustin @shopify on Jan. 29, 2023 {%- endcomment -%} 
+                <th colspan="1" scope="col"></th>
               </tr>
             </thead>
 
@@ -109,10 +111,12 @@
                       <dl>
                         {%- if item.product.has_only_default_variant == false -%}
                           {%- for option in item.options_with_values -%}
+                            {%- comment -%} Removed old display | Added by Dustin @shopify on Jan. 29, 2023
                             <div class="product-option">
-                              <dt>{{ option.name }}: </dt>
+                              <dt>{{ option.name }}:</dt>
                               <dd>{{ option.value }}</dd>
                             </div>
+                             {%- endcomment -%}
                           {%- endfor -%}
                         {%- endif -%}
 
@@ -120,7 +124,7 @@
                           {%- assign property_first_char = property.first | slice: 0 -%}
                           {%- if property.last != blank and property_first_char != '_' -%}
                             <div class="product-option">
-                              <dt>{{ property.first }}: </dt>
+                              <dt>{{ property.first | capitalize  }}: </dt>
                               <dd>
                                 {%- if property.last contains '/uploads/' -%}
                                   <a href="{{ property.last }}" class="link" target="_blank">
@@ -200,6 +204,12 @@
                       <label class="visually-hidden" for="Quantity-{{ item.index | plus: 1 }}">
                         {{ 'products.product.quantity.label' | t }}
                       </label>
+
+                {%- comment -%} Removed quantity for bulk items | Added by Dustin @shopify on Dec. 04, 2022 {%- endcomment -%}
+{%- if section.settings.yardage_quantity_selector -%}
+  {%  unless item.product.tags contains 'bulk' or item.product.title == 'Delivery fee' %}
+                {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 04, 2022 {%- endcomment -%}
+                
                       <quantity-input class="quantity">
                         <button class="quantity__button no-js-hidden" name="minus" type="button">
                           <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
@@ -220,11 +230,55 @@
                         </button>
                       </quantity-input>
 
-                      <cart-remove-button id="Remove-{{ item.index | plus: 1 }}" data-index="{{ item.index | plus: 1 }}">
-                        <a href="{{ item.url_to_remove }}" class="button button--tertiary" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}">
-                          {% render 'icon-remove' %}
-                        </a>
-                      </cart-remove-button>
+
+    
+{% else %}
+    
+     {%- unless item.product.title contains 'Delivery' -%}    
+       {% assign = total_yards = item.quantity | divided_by: 4.00 %}
+       {{ total_yards }} yards
+       {% if total_yards < 5 %}
+          {% assign fee_variant_id = 44145430298913 %}
+         {%  elsif total_yards > 6 and total_yards < 9 %}
+          {% assign fee_variant_id = 44145430331681 %}
+        {%  elsif total_yards > 10 and total_yards < 14 %}
+          {% assign fee_variant_id = 44145430364449 %}
+         {%  elsif total_yards >= 15 %}
+         {% assign fee_variant_id = 44145430397217 %}
+        {% endif %}
+    {%- endunless -%}  
+  {%  endunless %}
+  {%- comment -%} Removed for bracket | Added by Dustin @shopify on Dec. 20, 2022 {%- endcomment -%}
+  {%- elsif settings.yardage_quantity_bracket and item.product.tags contains 'bulk' -%}
+  
+{% else %}
+  {%- comment -%} Added for killswitchability | Added by Dustin @shopify on Dec. 18, 2022 {%- endcomment -%}
+              <quantity-input class="quantity">
+                        <button class="quantity__button no-js-hidden" name="minus" type="button">
+                          <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
+                          {% render 'icon-minus' %}
+                        </button>
+                        <input class="quantity__input"
+                          type="number"
+                          name="updates[]"
+                          value="{{ item.quantity }}"
+                          min="0"
+                          aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                          id="Quantity-{{ item.index | plus: 1 }}"
+                          data-index="{{ item.index | plus: 1 }}"
+                        >
+                        <button class="quantity__button no-js-hidden" name="plus" type="button">
+                          <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
+                          {% render 'icon-plus' %}
+                        </button>
+                      </quantity-input>
+  
+  {%- endif -%}
+ {%- comment -%} Removed quantity for bulk items | Added by Dustin @shopify on Dec. 04, 2022 {%- endcomment -%}
+  
+
+ 
+                       {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 05, 2022 {%- endcomment -%}
                     </div>
                     <div class="cart-item__error" id="Line-item-error-{{ item.index | plus: 1 }}" role="alert">
                       <small class="cart-item__error-text"></small>
@@ -247,6 +301,19 @@
                     </div>
 
                     <div class="cart-item__price-wrapper">
+                {%- comment -%} Calculate yardage | Added by Dustin @shopify on Jan. 29, 2023 {%- endcomment -%}
+                {%- if item.product.tags contains 'bulk' -%}                  
+                     {%- for property in item.properties -%}
+                          {%- assign yard_amount = property.last -%}
+                          {%- if property.last != blank and property_first_char != '_' -%}
+                          {%- endif -%}        
+                     {%- endfor -%}
+                  {%- assign price_with_yards = item.original_line_price | times: yard_amount -%}
+                           <span class="price price--end">
+                          {{ price_with_yards | money }}
+
+                        </span>
+                {% else %}
                       {%- if item.original_line_price != item.final_line_price -%}
                         <dl class="cart-item__discounted-prices">
                           <dt class="visually-hidden">
@@ -282,8 +349,20 @@
                           {{ item.variant.unit_price_measurement.reference_unit }}
                         </div>
                       {%- endif -%}
+                  {%- endif -%}
                     </div>
                   </td>
+                          {%- comment -%} Moved from line 275 | Added by Dustin @shopify on Jan. 29, 2023 {%- endcomment -%}
+<td class="line-remove-button">
+               
+                      <cart-remove-button id="Remove-{{ item.index | plus: 1 }}" data-index="{{ item.index | plus: 1 }}">
+                        <a href="{{ item.url_to_remove }}" class="button button--tertiary" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}">
+                          {% render 'icon-remove' %}
+                        </a>
+                      </cart-remove-button>
+  
+</td>
+                          {%- comment -%} @MC:EOL | Dustin @shopify on Jan. 29, 2023 {%- endcomment -%}
                 </tr>
               {%- endfor -%}
             </tbody>
@@ -296,7 +375,20 @@
     <p class="visually-hidden" id="shopping-cart-line-item-status" aria-live="polite" aria-hidden="true" role="status">{{ 'accessibility.loading' | t }}</p>
   </form>
 </cart-items>
+{%- comment -%} Submit the cart object through a contact form | Added by Dustin @shopify on Dec. 18, 2022 {%- endcomment -%}
+  {%- if settings.cart_object_form -%}
+    {% unless customer %}
+      {% include 'customer-address-popup' %}
+    {% endunless %}
 
+    {% include 'cart-object-form' %}
+  {%- endif -%}
+{%- comment -%} @MC:EOL | Dustin @shopify on Dec. 18, 2022 {%- endcomment -%}
+{%- comment -%} Added shipping fee | Added by Dustin @shopify on Dec. 05, 2022 {%- endcomment -%}                          
+  {%- if settings.shipping_fee -%}
+    {% include 'shipping_fee' %}
+  {%- endif -%}
+{%- comment -%} @MC:EOL | Dustin @shopify on Dec. 05, 2022 {%- endcomment -%}
 {% schema %}
 {
   "name": "t:sections.main-cart-items.name",

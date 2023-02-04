@@ -1,0 +1,80 @@
+<script>
+
+window.EventTarget.prototype.addDelegatedListener = function(type, delegateSelector, listener) {
+    this.addEventListener(type, function (event) {
+        if (event.target && event.target.matches(delegateSelector)) {
+            listener.call(event.target, event)
+        }
+    });
+}
+  
+document.addDelegatedListener("click", "input[type='radio']", function(event) { 
+   var second_option_fieldset = document.getElementById('second_option');  
+
+const selectedButtons = second_option_fieldset.querySelectorAll('input[type=radio]:checked');
+
+selectedButtons.forEach(function(button){
+  if (event.target.value !== button.value){
+        button.checked = false;
+  }
+
+});
+  
+  if (event.target.value === "Pick-Up" || event.target.value === "Delivered"){ 
+    document.querySelector('.rangeslider').classList.add('hide');
+    let product = document.querySelector('#ProductJson');
+    product = JSON.parse(product.innerHTML);
+    let available_variants = product.variants.filter((e) => e.option1 === event.target.value);
+   
+    let node = document.createElement("input");
+    let textnode = document.createTextNode("Label");
+    node.appendChild(textnode);
+    second_option_fieldset.innerHTML = "";
+    //this to further sort the variants
+   // available_variants.sort((a,b) => a.option2.substring(0,2) - b.option2.substring(0,2));
+      for (let i = 0; i < available_variants.length; i++) {
+        // Added by Dustin @shopify on Dec. 24, 2022  PROBLEM
+          second_option_fieldset.innerHTML += `<input id='{{ section.id }}-`+ i +`' type="radio" value="` + available_variants[i].option2 +  `">`;
+          second_option_fieldset.innerHTML += `<label for='{{ section.id }}-`+ i +`'>` + available_variants[i].option2 + `</label>`;
+      };      
+  }else{     
+
+    let yards_quantity = document.getElementById('yards-quantity');
+    let output= document.getElementById('demo');
+    let slider_range = document.getElementById('sliderRange');
+   let max_value = 100;   
+    let min_value = parseInt(event.target.value.split("-")[0]);
+    
+    if (typeof event.target.value.split("-")[1] !== 'undefined'){    
+      max_value = parseInt(event.target.value.split("-")[1]);
+    }
+      if (min_value >= 1){
+         document.querySelector('.rangeslider').classList.remove('hide');
+      //  if (min_value > 0 && min_value < max_value){
+      //    max_value = event.target.value.split("-").at(-1);
+          
+      //  }else {
+      //    min_value = event.target.value.split("+")[0];              
+       // /}
+        
+        yards_quantity.min = min_value; 
+        slider_range.min = min_value;
+        slider_range.max = max_value;
+        slider_range.value = min_value; 
+        yards_quantity.max = max_value;
+        yards_quantity.value = min_value;
+        output.innerHTML =  min_value;
+        yards_quantity.value = min_value;
+      }else{
+        document.querySelector('.rangeslider').classList.add('hide');
+      }
+
+    }
+
+});
+
+
+
+
+  
+</script>

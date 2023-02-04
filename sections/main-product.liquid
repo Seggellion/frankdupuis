@@ -384,10 +384,34 @@
                 class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
                 {{ block.shopify_attributes }}
               >
-                <label class="form__label" for="Quantity-{{ section.id }}">
+
+
+            {%- comment -%} When bracket used, remove quanitty | Added by Dustin @shopify on Dec. 20, 2022 {%- endcomment -%}
+             {%- if settings.yardage_quantity_bracket and product.tags contains 'bulk' -%}
+              {% render 'bulk-bracket' %}
+               
+                <label class="form__label hide" for="Quantity-{{ section.id }}">
+                  Yard Quantity
+                </label>
+                <input id="yards-quantity"
+                   type="number" 
+                   name="properties[yards]" 
+                   value="1"
+                   max="100"
+                   class="quantity__input hide"
+                   step="0.25"                               
+                   form="{{ product_form_id }}">
+            <input
+                    class="quantity__input"
+                    type="hidden"
+                    name="quantity"
+                     value="1"
+               form="{{ product_form_id }}"
+               >
+             {%- else -%}
+                            <label class="form__label" for="Quantity-{{ section.id }}">
                   {{ 'products.product.quantity.label' | t }}
                 </label>
-
                 <quantity-input class="quantity">
                   <button class="quantity__button no-js-hidden" name="minus" type="button">
                     <span class="visually-hidden">
@@ -395,6 +419,7 @@
                     </span>
                     {% render 'icon-minus' %}
                   </button>
+
                   <input
                     class="quantity__input"
                     type="number"
@@ -403,7 +428,9 @@
                     min="1"
                     value="1"
                     form="{{ product_form_id }}"
-                  >
+                  >               
+
+
                   <button class="quantity__button no-js-hidden" name="plus" type="button">
                     <span class="visually-hidden">
                       {{- 'products.product.quantity.increase' | t: product: product.title | escape -}}
@@ -411,6 +438,8 @@
                     {% render 'icon-plus' %}
                   </button>
                 </quantity-input>
+               {%- endif -%}
+            {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 20, 2022 {%- endcomment -%}
               </div>
             {%- when 'popup' -%}
               <modal-opener
@@ -505,6 +534,65 @@
                       {{ product.variants | json }}
                     </script>
                   </variant-radios>
+                   {%- elsif block.settings.picker_type == 'conditional' -%}
+                  {%- comment -%} Added conditional radios | Added by Dustin @shopify on Dec. 22, 2022 {%- endcomment -%}
+                  {% render 'get_current_variant' %}
+                  <variant-radios
+                    class="no-js-hidden"
+                    data-section="{{ section.id }}"
+                    data-url="{{ product.url }}"
+                    {{ block.shopify_attributes }}
+                  >
+             
+                      <fieldset class="js product-form__input">
+                        <legend class="form__label">{{ product.options_with_values[0].name }}</legend>
+                        {%- for value in product.options_with_values[0].values -%}
+                          <input
+                            type="radio"
+                            id="{{ section.id }}-{{ product.options_with_values[0].position }}-{{ forloop.index0 }}"
+                            name="{{ product.options_with_values[0].name }}"
+                            value="{{ value | escape }}"
+                            form="{{ product_form_id }}"
+                            {% if product.options_with_values[0].selected_value == value %}
+                              checked
+                            {% endif %}
+                          >
+                          <label for="{{ section.id }}-{{ product.options_with_values[0].position }}-{{ forloop.index0 }}">
+                            {{ value }}
+                          </label>
+                        {%- endfor -%}
+                      </fieldset>
+                   <fieldset id="second_option" class="js product-form__input">
+                  <legend class="form__label">{{ product.options_with_values[1].name }}</legend>
+                  
+
+
+{% assign my_array = product.options_with_values[1].values | split: ", " %}
+
+{{ my_array | sort | join: ", " }}
+                  
+                        {%- for value in my_array -%}
+                          <input
+                            type="radio"
+                            id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                            name="{{ option.name }}"
+                            value="{{ value | escape }}"
+                            form="{{ product_form_id }}"
+                            {% if option.selected_value == value %}
+                              checked
+                            {% endif %}
+                          >
+                          <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                            {{ value }}
+                          </label>
+                        {%- endfor -%}
+                      </fieldset>
+                    
+                    <script type="application/json">
+                      {{ product.variants | json }}
+                    </script>
+                  </variant-radios>
+                  {% render 'range_slider' %}
                 {%- else -%}
                   <variant-selects
                     class="no-js-hidden"
@@ -605,6 +693,28 @@
                       value="{{ product.selected_or_first_available_variant.id }}"
                       disabled
                     >
+
+        {%- comment -%} Added range slider | Added by Dustin @shopify on Nov. 30, 2022 {%- endcomment -%}
+{%- if section.settings.yardage_quantity_selector -%}
+  {%- if product.tags contains "bulk" -%}                
+<style>
+    
+  variant-radios .product-form__input:nth-child(2), .product-form__quantity{
+    opacity: 0;
+    height: 0px;
+    z-index: -5;
+    position: absolute;
+  }
+
+    </style>
+    {% render 'range_slider' %}
+    
+                   {%- endif -%}
+  {%- endif -%}
+                    {%- comment -%} @MC:EOL | Dustin @shopify on Nov. 30, 2022 {%- endcomment -%}
+    
+
+                    
                     <div class="product-form__buttons">
                       <button
                         type="submit"
@@ -1088,6 +1198,13 @@
     <script src="{{ 'product-model.js' | asset_url }}" defer></script>
   {%- endif -%}
 
+{%- comment -%} Show product data | Added by Dustin @shopify on Dec. 22, 2022 {%- endcomment -%}
+ <script type="application/json" id="ProductJson" >
+      {{ product | json }}
+</script>
+{%- comment -%} @MC:EOL | Dustin @shopify on Dec. 22, 2022 {%- endcomment -%}
+
+                        
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       function isIE() {
@@ -1237,6 +1354,10 @@
             {
               "value": "button",
               "label": "t:sections.main-product.blocks.variant_picker.settings.picker_type.options__2.label"
+            },
+              {
+              "value": "conditional",
+              "label": "Conditional pills"
             }
           ],
           "default": "button",
