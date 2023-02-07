@@ -28,32 +28,15 @@ document.addEventListener("DOMContentLoaded", function(){
   var corrected = document.getElementById("corrected");
   const persistent_quantity = parseInt(rangeslider.dataset.persistentquantity);
 
- output.innerHTML = rangeslider.value;
-
-  if (rangeslider.dataset.persistence){
-
- // quantity.value = 0;
-  }else{
- //  console.log('no persistence');
-  //  quantity.value = (10 * 4);
-  }
-   
-  rangeslider.oninput = function() {
-    
+ output.innerHTML = rangeslider.value;   
+  rangeslider.oninput = function() {    
      if (rangeslider.dataset.persistence){  
-       
-     //   corrected.innerHTML =  this.value - (persistent_quantity*0.25);
-  //      output.innerHTML =  this.value;
-    //    quantity.value = (this.value - (persistent_quantity*0.25)) * 4;
-  //    quantity.value = this.value;
-     }else{
-       
+     }else{       
       output.innerHTML =  this.value;
       quantity.value = (this.value );
      }
   }
 
-  
 var button = document.querySelector('.product-form__submit');
    button.addEventListener("click", function(e) {  
   });

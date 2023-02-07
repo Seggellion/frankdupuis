@@ -24,34 +24,24 @@
               <div class="js-contents subtotal-price-container hide" {{ block.shopify_attributes }}>
                 <div class="totals">
                   <h2 class="totals__subtotal">{{ 'sections.cart.subtotal' | t }}</h2>
-                  {%- comment -%} Revised with bulk | Added by Dustin @shopify on Jan. 29, 2023 {%- endcomment -%}
-            
-   {%- if settings.cart_object_form -%} 
-{% for item in cart.items %}
-  {% if item.product.tags contains 'bulk' %}
-  
-                         {%- for property in item.properties -%}                           
-                          {%- assign yard_amount = property.last -%}
-     
-                     {%- endfor -%}
-                  {%- assign price_with_yards = item.original_line_price | times: yard_amount -%}
-    
-                  {%- assign bulk_amount = bulk_amount | plus: price_with_yards -%}
-    
-    
-    {%- assign unbulk_amount = unbulk_amount | plus: item.original_line_price -%}
-    {% endif %}
-  {%  endfor %}
-     
-                  {%- assign with_bulk_price = cart.total_price | minus: unbulk_amount | plus: bulk_amount  -%}
-                  <p class="totals__subtotal-value">{{ with_bulk_price | money_with_currency }}</p>
-{%- else -%}
-     <p class="totals__subtotal-value">{{ cart.total_price | money_with_currency }}</p>
-     {%- endif -%}
-                  
-                  
+                  {%- comment -%} Revised with bulk | Added by Dustin @shopify on Jan. 29, 2023 {%- endcomment -%}            
+                  {%- if settings.cart_object_form -%} 
+                    {% for item in cart.items %}
+                      {% if item.product.tags contains 'bulk' %}
+                        {%- for property in item.properties -%}                           
+                          {%- assign yard_amount = property.last -%}     
+                        {%- endfor -%}
+                        {%- assign price_with_yards = item.original_line_price | times: yard_amount -%}    
+                        {%- assign bulk_amount = bulk_amount | plus: price_with_yards -%}    
+                        {%- assign unbulk_amount = unbulk_amount | plus: item.original_line_price -%}
+                      {% endif %}
+                    {%  endfor %}     
+                    {%- assign with_bulk_price = cart.total_price | minus: unbulk_amount | plus: bulk_amount  -%}
+                    <p class="totals__subtotal-value">{{ with_bulk_price | money_with_currency }}</p>
+                  {%- else -%}
+                    <p class="totals__subtotal-value">{{ cart.total_price | money_with_currency }}</p>
+                  {%- endif -%}                  
                 </div>
-
                 <div>
                   {%- if cart.cart_level_discount_applications.size > 0 -%}
                     <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
@@ -87,28 +77,23 @@
                   </button>
                 </noscript>
 
-{%- comment -%} replace with contact form | Added by Dustin @shopify on Dec. 18, 2022 {%- endcomment -%}
-
-                 {%- if settings.cart_object_form -%}                   
+                {%- comment -%} replace with contact form | Added by Dustin @shopify on Dec. 18, 2022 {%- endcomment -%}
+                {%- if settings.cart_object_form -%}                   
                   {% unless customer.default_address.address1 == blank %}
                     <a href="#" id="cart-object-form-submit" class="cart__checkout-button button hide" name="checkout"{% if cart == empty %} disabled{% endif %} form="cart">
                       Submit Order For Processing
                     </a>
-                <small>Delivery fees may apply, we will reach out to you with final cost</small>
-
+                    <small>Delivery fees may apply, we will reach out to you with final cost</small>
                   {% endunless %}
                 {%- else -%}
                   <button type="submit" id="checkout" class="cart__checkout-button button" name="checkout"{% if cart == empty %} disabled{% endif %} form="cart">
                     {{ 'sections.cart.checkout' | t }}
                   </button>
-                  {%- endif -%}
+                {%- endif -%}
                 {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 18, 2022 {%- endcomment -%}
               </div>
-
-
           {%- endcase -%}
         {% endfor %}
-
         <div id="cart-errors"></div>
       </div>
     </div>

@@ -30,10 +30,7 @@ selectedButtons.forEach(function(button){
     let textnode = document.createTextNode("Label");
     node.appendChild(textnode);
     second_option_fieldset.innerHTML = "";
-    //this to further sort the variants
-   // available_variants.sort((a,b) => a.option2.substring(0,2) - b.option2.substring(0,2));
       for (let i = 0; i < available_variants.length; i++) {
-        // Added by Dustin @shopify on Dec. 24, 2022  PROBLEM
           second_option_fieldset.innerHTML += `<input id='{{ section.id }}-`+ i +`' type="radio" value="` + available_variants[i].option2 +  `">`;
           second_option_fieldset.innerHTML += `<label for='{{ section.id }}-`+ i +`'>` + available_variants[i].option2 + `</label>`;
       };      
@@ -49,14 +46,7 @@ selectedButtons.forEach(function(button){
       max_value = parseInt(event.target.value.split("-")[1]);
     }
       if (min_value >= 1){
-         document.querySelector('.rangeslider').classList.remove('hide');
-      //  if (min_value > 0 && min_value < max_value){
-      //    max_value = event.target.value.split("-").at(-1);
-          
-      //  }else {
-      //    min_value = event.target.value.split("+")[0];              
-       // /}
-        
+         document.querySelector('.rangeslider').classList.remove('hide');        
         yards_quantity.min = min_value; 
         slider_range.min = min_value;
         slider_range.max = max_value;
@@ -68,13 +58,6 @@ selectedButtons.forEach(function(button){
       }else{
         document.querySelector('.rangeslider').classList.add('hide');
       }
-
     }
-
 });
-
-
-
-
-  
 </script>

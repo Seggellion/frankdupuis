@@ -5,7 +5,7 @@ async function _getCurrentProduct() {
   const product = document.querySelector('#ProductJson');
 
   if (product) {
-    console.log(JSON.parse(product.innerHTML));
+    
     return JSON.parse(product.innerHTML);
   }
 
@@ -31,19 +31,9 @@ async function _getCurrentVariant() {
 }
 
 function _getVariantID(product) {
- // const options = document.querySelector(`.select__select`)[1];
- // const options = document.getElementsByClassName('select__select')[0];
-const radio_options = document.querySelectorAll(`input[type="radio"]`);
-// const currentVariantID = options.selectedOptions[0].value.toLowerCase();
+  const radio_options = document.querySelectorAll(`input[type="radio"]`);
   const radio_option_string = radio_options[0].value;
- // const currentVariantID = parseInt(
- //   options.selectedOptions[0].value.toLowerCase()
- // );
-
-//  const variant = product.variants.filter((e) => e.option2 === currentVariantID)[0];
-const available_variants = product.variants.filter((e) => e.option1 === radio_option_string);
-  
- // Shopify.available_variants = available_variants;
+  const available_variants = product.variants.filter((e) => e.option1 === radio_option_string);
   return available_variants;
 }
 
@@ -57,31 +47,19 @@ let textnode = document.createTextNode("Label");
 node.appendChild(textnode);
   second_option_fieldset.innerHTML = "";
 for (let i = 0; i < variants.length; i++) {
-
     second_option_fieldset.innerHTML += `<input id='{{ section.id }}-`+ i +`' type="radio" value="` + variants[i].option2 +  `">`;
     second_option_fieldset.innerHTML += `<label for='{{ section.id }}-`+ i +`'>` + variants[i].option2 + `</label>`;
 };
 
-//  second_option_fieldset.appendChild(node);
-
-  
 }
   
 document.addEventListener("DOMContentLoaded", function(){
- // currentVariant();
   var second_option_fieldset = document.getElementById('second_option');
   second_option_fieldset.innerHTML = "";
 });
   
 let option_selectors = document.querySelectorAll(`input[type="radio"]`);
 
-
-
-//option_selectors.forEach(element => element.addEventListener("click", function () {
-//  console.log('clicked');
- // currentVariant();
-//}));
-  
   
 </script>
 {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 22, 2022 {%- endcomment -%}

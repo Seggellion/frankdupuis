@@ -11,18 +11,6 @@
 {%- comment -%} You have to edit the default one by default | Added by Dustin @shopify on Jan. 22, 2023 {%- endcomment -%}
 {% assign address = customer.addresses[0] %}
 {%- form 'customer_address', address -%}
-  {%- comment -%} Removed because it shouldn't be needed for edit address | Added by Dustin @shopify on Jan. 29, 2023 
-  <div class="row">      
-    <div class="field">
-      <input type="text" id="AddressFirstNameNew" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name" placeholder="{{ 'customer.addresses.first_name' | t }}">
-      <label for="AddressFirstName_{{ form.id }}">{{ 'customer.addresses.first_name' | t }}</label>
-    </div>
-    <div class="field">
-      <input type="text" id="AddressLastName_{{ form.id }}" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name" placeholder="{{ 'customer.addresses.last_name' | t }}">
-      <label for="AddressLastName_{{ form.id }}">{{ 'customer.addresses.last_name' | t }}</label>
-    </div>
-  </div>
-    {%- endcomment -%}
   <div class="field">
     <input type="text" id="AddressCompany_{{ form.id }}" name="address[company]" value="{{ form.company }}" autocomplete="organization" placeholder="Optional">
     <label for="AddressCompany_{{ form.id }}">{{ 'customer.addresses.company' | t }}</label>

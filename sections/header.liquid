@@ -590,32 +590,9 @@
         </details>
       </details-modal>
 
-
-      {%- comment -%} Phone number | Added by Dustin @shopify on Oct. 20, 2022 {%- endcomment -%}
-
-    {% assign saturday_start_time =  settings.saturday_hours | slice: 0, 2 %}
-    {% assign saturday_start_time  =  saturday_start_time  | times: 1 %}
-    {% assign saturday_end_time =  settings.saturday_hours | slice: 5, 8 %}
-    {% assign saturday_end_time  =  saturday_end_time  | times: 1 %}
-    {% assign monday_start_time =  settings.monday_hours | slice: 0, 2 %}
-    {% assign monday_start_time  =  monday_start_time  | times: 1 %}
-    {% assign monday_end_time =  settings.monday_hours | slice: 5, 8 %}
-    {% assign monday_end_time  =  monday_end_time  | times: 1 %}
-
-      <div class="custom-data">
-        <a class="telephone-link" href="tel:{{ settings.phone_number }}">
-          {{ settings.phone_number }}
-        </a>
-        <div class="hours">
-          <table>
-            <tr><td>
-            {% if settings.monday %}Mon-Fri {{ monday_start_time }}-{{ monday_end_time }}{% endif %}
-            {% if settings.saturday %} || Sat {{ saturday_start_time }}-{{ saturday_end_time }}{% endif %}</td></tr>
-            <tr><td></td></tr>                   
-          </table>                      
-        </div>
-      </div>                    
-      {%- comment -%} @MC:EOL | Dustin @shopify on Oct. 20, 2022 {%- endcomment -%}
+     {%- comment -%} Added start time and phone number | Added by Dustin @shopify on Oct. 20, 2022 {%- endcomment -%}
+     {%- render 'start_time' -%}
+     {%- comment -%} @MC:EOL | Dustin @shopify on Oct. 20, 2022 {%- endcomment -%}
                     
       {%- if shop.customer_accounts_enabled -%}
         
@@ -645,25 +622,23 @@
         {%- if cart != empty -%}
         {%- comment -%} Change item count | Added by Dustin @shopify on Dec. 04, 2022 {%- endcomment -%}
           {%- if section.settings.yardage_quantity_selector -%}
-        {%-  assign adjusted_count = cart.items.size  -%}
-          <div class="cart-count-bubble">
-            {%- if cart.items.size < 100 -%}
-              <span aria-hidden="true">{{ adjusted_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: adjusted_count }}</span>
-                {%- else -%}    
-           
-         <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-          
-            {%- endif -%}
-            {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 04, 2022 {%- endcomment -%}
-          </div>
-        {%- endif -%}
+            {%-  assign adjusted_count = cart.items.size  -%}
+            <div class="cart-count-bubble">
+              {%- if cart.items.size < 100 -%}
+                <span aria-hidden="true">{{ adjusted_count }}</span>
+              {%- endif -%}
+              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: adjusted_count }}</span>
+                  {%- else -%}            
+                  <div class="cart-count-bubble">
+                      {%- if cart.item_count < 100 -%}
+                        <span aria-hidden="true">{{ cart.item_count }}</span>
+                      {%- endif -%}
+                      <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+                    </div>          
+              {%- endif -%}
+              {%- comment -%} @MC:EOL | Dustin @shopify on Dec. 04, 2022 {%- endcomment -%}
+            </div>
+          {%- endif -%}
       </a>
     </div>
   </header>

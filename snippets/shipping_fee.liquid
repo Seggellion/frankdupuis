@@ -17,7 +17,7 @@
     }
     if ( ( cartItems.length === 1 ) && ( qtyInTheCart > 0 ) ) {
       cartUpdates = { {{ fee_variant_id }}: 0 }
-      console.log('test');
+
     }    
     else if ( ( cartItems.length >= 1 ) && ( qtyInTheCart !== 1 ) && (cartTotal >= {{ free_gift_over_price_30 }} ) ) {
       cartUpdates = { {{ fee_variant_id }}: 1 }
@@ -36,7 +36,4 @@
     };
     $.ajax(params);
   })(jQuery);
-
-
-    
   </script>
