@@ -20,7 +20,7 @@ selectedButtons.forEach(function(button){
 
 });
   
-  if (event.target.value === "Pick-Up" || event.target.value === "Delivered"){ 
+if (event.target.value.toLowerCase()  === "pick-up" || event.target.value.toLowerCase() === "delivered"){ 
     document.querySelector('.rangeslider').classList.add('hide');
     let product = document.querySelector('#ProductJson');
     product = JSON.parse(product.innerHTML);
