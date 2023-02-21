@@ -177,7 +177,7 @@ window.initMap = initMap;
         <li><span>Monday-Friday</span><span>{{ weekday_hours }}</span></li>
       {% endunless %}
       {% if settings.saturday %}<li><span>Saturday</span><span>{{ settings.saturday_hours }}</span></li>{% endif %}        
-      <li><span>Sunday</span><span>Closed</span></li>
+      {% if settings.sunday %}<li><span>Sunday</span><span>{{ settings.sunday_hours }}</span></li>{% endif %}        
     </ul>
   </div>
   {% if settings.holiday_date %}

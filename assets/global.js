@@ -899,7 +899,12 @@ class VariantRadios extends VariantSelects {
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll('fieldset'));
     this.options = fieldsets.map((fieldset) => {
-      return Array.from(fieldset.querySelectorAll('input')).find((radio) => radio.checked).value;
+      // Added because of secondary options by Dustin @shopify on Feb. 21, 2023 
+      var checked_radios = Array.from(fieldset.querySelectorAll('input')).find((radio) => radio.checked);      
+      if (checked_radios){
+        return checked_radios.value;
+      }
+      // @MC:EOL | Dustin @shopify on Feb. 21, 2023 
     });
   }
 }
