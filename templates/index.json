@@ -123,7 +123,7 @@
             "color_scheme": "background-1",
             "text_alignment_mobile": "center",
             "custom_settings__maintain_aspect_ratio": true,
-            "custom_settings__image_position": 30
+            "custom_settings__image_position": 0
           }
         }
       },
