@@ -399,9 +399,9 @@ width:100%;
 
 #Slide-template--17802574233889__slideshow-1 .banner__media img{
 object-position: 32% 45% !important;
-       height: initial; 
-     top: initial; 
-   bottom: initial; 
+       height: initial !important; 
+     top: initial!important; 
+   bottom: initial!important; 
 }
 }
 
