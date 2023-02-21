@@ -398,8 +398,11 @@ width:100%;
 }
 
 #Slide-template--17802574233889__slideshow-1 .banner__media img{
-bottom: 210px !important;
-  
+object-position: 32% 45% !important;
+       height: initial; 
+     top: initial; 
+   bottom: initial; 
+}
 }
 
 /* @MC:EOL |  Dustin H (Shopify Theme Support) on Dec. 23, 2022 */
