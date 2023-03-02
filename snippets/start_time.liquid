@@ -17,7 +17,7 @@
       <table>
         <tr><td>
         {% if settings.monday %}Mon-Fri {{ monday_start_time }}-{{ monday_end_time }}{% endif %}
-        {% if settings.saturday %} || Sat {{ saturday_start_time }}-{{ saturday_end_time }}{% endif %}</td></tr>
+        {% if settings.saturday %} || Sat {% if settings.saturday_hours contains 'Closed' %}{{ settings.saturday_hours }}{% else %}{{ saturday_start_time }}-{{ saturday_end_time }} {% endif %}{% endif %}</td></tr>
         <tr><td></td></tr>                   
       </table>                      
     </div>

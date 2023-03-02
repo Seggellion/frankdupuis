@@ -83,13 +83,14 @@
           opacity: {{ block.settings.image_overlay_opacity | divided_by: 100.0 }};
         }
 {%- comment -%} restore aspect ratio | Added by Dustin @shopify on Oct. 23, 2022 {%- endcomment -%}
-      {%- if block.settings.custom_settings__maintain_aspect_ratio -%}
-      #Slide-{{ section.id }}-{{ forloop.index }} .banner__media img{
-        height: auto;
-        top: auto;
-        bottom: -{{ block.settings.custom_settings__image_position }}%;
-      }
-      {%- endif -%}}
+{%- if block.settings.custom_settings__maintain_aspect_ratio -%}
+  #Slide-{{ section.id }}-{{ forloop.index }} .banner__media img{
+    height: 100%;
+    top: 0px;
+    bottom:0px;
+    object-position: 0% {{ block.settings.custom_settings__image_position }}% ;
+  }        
+  {%- endif -%}
     {%- comment -%} @MC:EOL | Dustin @shopify on Oct. 23, 2022 {%- endcomment -%}
   
       </style>
