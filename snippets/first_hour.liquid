@@ -1,0 +1,22 @@
+{% assign numbers = "0123456789" %}
+{% assign string_length = input_string | size %}
+{% assign string_length = string_length | minus: 1 %}
+{% assign last_hour = "" %}
+{% assign found = false %}
+
+{% for index in (0..string_length)  %}
+  {% assign char = input_string | slice: index, 1 %}
+  {% if numbers contains char and found == false %}
+    {% assign temp_index = index | plus: 1 %}
+    {% assign next_char = input_string | slice: temp_index, 1 %}
+    {% if numbers contains next_char %}
+      {% assign first_hour = char | append: next_char %}
+      {% assign found = true %}
+    {% else %}
+      {% assign first_hour = char %}
+      {% assign found = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{{ first_hour }}

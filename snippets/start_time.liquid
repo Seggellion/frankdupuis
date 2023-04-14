@@ -16,8 +16,8 @@
     <div class="hours">
       <table>
         <tr><td>
-        {% if settings.monday %}Mon-Fri {{ monday_start_time }}-{{ monday_end_time }}{% endif %}
-        {% if settings.saturday %} || Sat {% if settings.saturday_hours contains 'Closed' %}{{ settings.saturday_hours }}{% else %}{{ saturday_start_time }}-{{ saturday_end_time }} {% endif %}{% endif %}</td></tr>
+          {% if settings.monday %}Mon-Fri {% render 'first_hour', input_string: settings.monday_hours %}-{%- render 'last_hour', input_string: settings.monday_hours -%}{% endif %}
+          {% if settings.saturday %} || Sat {% if settings.saturday_hours contains 'Closed' %}{{ settings.saturday_hours }}{% else %}{% render 'first_hour', input_string: settings.saturday_hours %}-{%- render 'last_hour', input_string: settings.saturday_hours -%}{% endif %}{% endif %}</td></tr>
         <tr><td></td></tr>                   
       </table>                      
     </div>
