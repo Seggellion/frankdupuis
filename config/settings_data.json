@@ -132,6 +132,9 @@
     "friday_hours": "8am - 5pm",
     "saturday": true,
     "saturday_hours": "8 - 2",
+    "sunday_hours": "10-2",
+    "holiday_date": "Victoria Day - May 22nd",
+    "holiday_hours": "10-2",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
