@@ -131,7 +131,7 @@
     "thursday_hours": "8am - 5pm",
     "friday_hours": "8am - 5pm",
     "saturday": true,
-    "saturday_hours": "8 - 12",
+    "saturday_hours": "8 - 2",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
