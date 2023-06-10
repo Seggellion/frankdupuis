@@ -1,13 +1,16 @@
 
 
-{% assign saturday_start_time =  settings.saturday_hours | slice: 0, 2 %}
-{% assign saturday_start_time  =  saturday_start_time  | times: 1 %}
-{% assign saturday_end_time =  settings.saturday_hours | slice: 5, 8 %}
-{% assign saturday_end_time  =  saturday_end_time  | times: 1 %}
-{% assign monday_start_time =  settings.monday_hours | slice: 0, 2 %}
-{% assign monday_start_time  =  monday_start_time  | times: 1 %}
-{% assign monday_end_time =  settings.monday_hours | slice: 5, 8 %}
-{% assign monday_end_time  =  monday_end_time  | times: 1 %}
+{% assign saturday_hours =  settings.saturday_hours | split: "-" %}
+{% assign saturday_start_time  =  saturday_hours[0]  | times: 1 %}
+{% assign saturday_end_time  =  saturday_hours[1]  | times: 1 %}
+
+{% assign sunday_hours =  settings.sunday_hours | split: "-" %}
+{% assign sunday_start_time  =  sunday_hours[0]  | times: 1 %}
+{% assign sunday_end_time  =  sunday_hours[1] | times: 1 %}
+
+{% assign monday_hours =  settings.monday_hours | split: "-" %}
+{% assign monday_start_time  =  monday_hours[0]  | times: 1 %}
+{% assign monday_end_time  =  monday_hours[1]  | times: 1 %}
 
   <div class="custom-data">
     <a class="telephone-link" href="tel:{{ settings.phone_number }}">
@@ -17,7 +20,10 @@
       <table>
         <tr><td>
           {% if settings.monday %}Mon-Fri {% render 'first_hour', input_string: settings.monday_hours %}-{%- render 'last_hour', input_string: settings.monday_hours -%}{% endif %}
-          {% if settings.saturday %} || Sat {% if settings.saturday_hours contains 'Closed' %}{{ settings.saturday_hours }}{% else %}{% render 'first_hour', input_string: settings.saturday_hours %}-{%- render 'last_hour', input_string: settings.saturday_hours -%}{% endif %}{% endif %}</td></tr>
+          {% if settings.saturday %}{% if settings.sunday %}<br />{% else %} || {% endif %}Sat {% if settings.saturday_hours contains 'Closed' %}{{ settings.saturday_hours }}{% else %}{% render 'first_hour', input_string: settings.saturday_hours %}-{%- render 'last_hour', input_string: settings.saturday_hours -%}{% endif %}{% endif %}
+          {% if settings.sunday %} || Sun {% if settings.sunday_hours contains 'Closed' %}{{ settings.sunday_hours }}{% else %}{% render 'first_hour', input_string: settings.sunday_hours %}-{%- render 'last_hour', input_string: settings.sunday_hours -%}{% endif %}{% endif %}
+          </td>
+        </tr>
         <tr><td></td></tr>                   
       </table>                      
     </div>

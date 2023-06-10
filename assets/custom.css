@@ -411,4 +411,9 @@ object-position: 32% 45% !important;
    bottom: 0px !important; 
 }
 
+.custom-data .hours td{
+  text-align: center;
+  line-height: 17px;
+}
+
 /* @MC:EOL |  Dustin H (Shopify Theme Support) on Dec. 23, 2022 */
