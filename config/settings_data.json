@@ -133,8 +133,8 @@
     "saturday": true,
     "saturday_hours": "8 - 12",
     "sunday_hours": "10-2",
-    "holiday_date": "",
-    "holiday_hours": "",
+    "holiday_date": "Labour Day Weekend (Sept 2,3,4)",
+    "holiday_hours": "CLOSED",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
