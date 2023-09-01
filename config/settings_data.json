@@ -131,8 +131,9 @@
     "thursday_hours": "8am - 5pm",
     "friday_hours": "8am - 5pm",
     "saturday": true,
-    "saturday_hours": "8 - 12",
-    "sunday_hours": "10-2",
+    "saturday_hours": "8-12",
+    "sunday": false,
+    "sunday_hours": "-",
     "holiday_date": "Labour Day Weekend (Sept 2,3,4)",
     "holiday_hours": "CLOSED",
     "sections": {
