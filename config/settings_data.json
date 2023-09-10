@@ -132,10 +132,10 @@
     "friday_hours": "8am - 5pm",
     "saturday": true,
     "saturday_hours": "8-12",
-    "sunday": false,
-    "sunday_hours": "-",
-    "holiday_date": "Labour Day Weekend (Sept 2,3,4)",
-    "holiday_hours": "CLOSED",
+    "sunday": true,
+    "sunday_hours": "CLOSED",
+    "holiday_date": "",
+    "holiday_hours": "",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
