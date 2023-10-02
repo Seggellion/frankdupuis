@@ -134,7 +134,7 @@
     "saturday_hours": "8-12",
     "sunday": true,
     "sunday_hours": "CLOSED",
-    "holiday_date": "Thanks Giving (Monday 9th)",
+    "holiday_date": "Thanks Giving (Sat 7th, Sun 8th, Mon 9th)",
     "holiday_hours": "CLOSED",
     "sections": {
       "announcement-bar": {
