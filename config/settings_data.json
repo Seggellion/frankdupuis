@@ -131,9 +131,9 @@
     "thursday_hours": "8am-5pm",
     "friday_hours": "8am-5pm",
     "saturday": true,
-    "saturday_hours": "CLOSED",
-    "sunday": true,
-    "sunday_hours": "CLOSED",
+    "saturday_hours": "8-2",
+    "sunday": false,
+    "sunday_hours": "",
     "holiday_date": "",
     "holiday_hours": "",
     "sections": {
