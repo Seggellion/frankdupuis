@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "current": {
     "colors_solid_button_labels": "#fcfcfc",
@@ -134,8 +143,8 @@
     "saturday_hours": "8-2",
     "sunday": true,
     "sunday_hours": "10-2",
-    "holiday_date": "",
-    "holiday_hours": "",
+    "holiday_date": "Canada Day",
+    "holiday_hours": "8-2",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
