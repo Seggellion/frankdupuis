@@ -143,8 +143,8 @@
     "saturday_hours": "8-12",
     "sunday": false,
     "sunday_hours": "",
-    "holiday_date": "Canada Day",
-    "holiday_hours": "8-2",
+    "holiday_date": "Civic Holiday",
+    "holiday_hours": "CLOSED",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
