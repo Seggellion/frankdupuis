@@ -143,8 +143,8 @@
     "saturday_hours": "8-12",
     "sunday": false,
     "sunday_hours": "",
-    "holiday_date": "Civic Holiday",
-    "holiday_hours": "CLOSED",
+    "holiday_date": "Thanksgiving",
+    "holiday_hours": "CLOSED Oct 12, 13, 14th",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
