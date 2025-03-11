@@ -1,12 +1,12 @@
 /*
-* ------------------------------------------------------------
-* IMPORTANT: The contents of this file are auto-generated.
-*
-* This file may be updated by the Shopify admin theme editor
-* or related systems. Please exercise caution as any changes
-* made to this file may be overwritten.
-* ------------------------------------------------------------
-*/
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "colors_solid_button_labels": "#fcfcfc",
@@ -115,10 +115,10 @@
     "sold_out_badge_color_scheme": "inverse",
     "accent_icons": "text",
     "social_twitter_link": "",
-    "social_facebook_link": "https:\/\/facebook.com\/frankdupuislandscapesupply",
+    "social_facebook_link": "https://facebook.com/frankdupuislandscapesupply",
     "social_pinterest_link": "",
-    "social_instagram_link": "https:\/\/instagram.com\/frankdupuislandscaping",
-    "social_tiktok_link": "https:\/\/tiktok.com\/frankdupuislandscaping",
+    "social_instagram_link": "https://instagram.com/frankdupuislandscaping",
+    "social_tiktok_link": "https://tiktok.com/frankdupuislandscaping",
     "social_tumblr_link": "",
     "social_snapchat_link": "",
     "social_youtube_link": "",
@@ -126,7 +126,7 @@
     "predictive_search_enabled": true,
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": false,
-    "favicon": "shopify:\/\/shop_images\/dupuis-favicon.png",
+    "favicon": "shopify://shop_images/dupuis-favicon.png",
     "currency_code_enabled": true,
     "cart_type": "notification",
     "show_vendor": false,
@@ -139,12 +139,12 @@
     "wednesday_hours": "8-5",
     "thursday_hours": "8-5",
     "friday_hours": "8-5",
-    "saturday": true,
+    "saturday": false,
     "saturday_hours": "8-12",
     "sunday": false,
     "sunday_hours": "",
-    "holiday_date": "Thanksgiving",
-    "holiday_hours": "CLOSED Oct 12, 13, 14th",
+    "holiday_date": "",
+    "holiday_hours": "",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
@@ -162,8 +162,7 @@
         "block_order": [
           "announcement-bar-0"
         ],
-        "settings": {
-        }
+        "settings": {}
       },
       "header": {
         "type": "header",
@@ -188,7 +187,7 @@
             "type": "text",
             "settings": {
               "heading": "OUR MISSION",
-              "subtext": "<p>Our main goal is to provide customers with easy, secure, and fast service! We strive to give you the best experience & top quality products.<\/p>"
+              "subtext": "<p>Our main goal is to provide customers with easy, secure, and fast service! We strive to give you the best experience & top quality products.</p>"
             }
           }
         },
@@ -223,9 +222,7 @@
         }
       }
     },
-    "content_for_index": [
-
-    ]
+    "content_for_index": []
   },
   "presets": {
     "Default": {
@@ -368,8 +365,7 @@
           "block_order": [
             "announcement-bar-0"
           ],
-          "settings": {
-          }
+          "settings": {}
         },
         "header": {
           "type": "header",
@@ -416,7 +412,7 @@
               "type": "text",
               "settings": {
                 "heading": "Our mission",
-                "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
+                "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
               }
             }
           },
