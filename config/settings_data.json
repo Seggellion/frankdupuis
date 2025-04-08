@@ -139,7 +139,7 @@
     "wednesday_hours": "8-5",
     "thursday_hours": "8-5",
     "friday_hours": "8-5",
-    "saturday": false,
+    "saturday": true,
     "saturday_hours": "8-12",
     "sunday": false,
     "sunday_hours": "",
