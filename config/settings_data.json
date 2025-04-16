@@ -143,8 +143,8 @@
     "saturday_hours": "8-12",
     "sunday": false,
     "sunday_hours": "",
-    "holiday_date": "",
-    "holiday_hours": "",
+    "holiday_date": "Good Friday",
+    "holiday_hours": "8-2",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
