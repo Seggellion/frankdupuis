@@ -142,8 +142,8 @@
     "friday_hours": "8-5",
     "saturday": true,
     "saturday_hours": "8-12",
-    "sunday": false,
-    "sunday_hours": "",
+    "sunday": true,
+    "sunday_hours": "10-2",
     "holiday_date": "",
     "holiday_hours": "",
     "sections": {
