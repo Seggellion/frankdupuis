@@ -144,8 +144,8 @@
     "saturday_hours": "8-2",
     "sunday": true,
     "sunday_hours": "10-2",
-    "holiday_date": "",
-    "holiday_hours": "",
+    "holiday_date": "Victoria Day",
+    "holiday_hours": "8-2",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
