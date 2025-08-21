@@ -144,7 +144,7 @@
     "saturday_hours": "8-2",
     "sunday": true,
     "sunday_hours": "10-2",
-    "holiday_date": "Aug 4th, 30th, 31st. Sept. 1st",
+    "holiday_date": "Aug 30th, 31st. Sept. 1st",
     "holiday_hours": "CLOSED",
     "sections": {
       "announcement-bar": {
