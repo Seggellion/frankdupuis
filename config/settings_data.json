@@ -144,8 +144,8 @@
     "saturday_hours": "8-12",
     "sunday": false,
     "sunday_hours": "10-2",
-    "holiday_date": "",
-    "holiday_hours": "",
+    "holiday_date": "NOV 11, 12, 13",
+    "holiday_hours": "CLOSED",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
